@@ -99,3 +99,10 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# generated data
+/downloaded
+*.part
+*.mp3
+*.wav
+
