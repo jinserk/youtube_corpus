@@ -7,6 +7,7 @@ import os
 from pathlib import Path, PurePath
 import youtube_dl
 import click
+import pycaption as cap
 
 
 base_path = Path.cwd()
@@ -30,7 +31,7 @@ def my_hook(d):
     filename, status = d['filename'], d['status']
     if status == 'downloading':
         down, total = d['downloaded_bytes'], d['total_bytes']
-        sys.stdout.write('{}: downloading ({}/{})                 \r'.format(filename, down, total))
+        sys.stdout.write('{}: downloading ({}/{})\t\t\t\r'.format(filename, down, total))
         sys.stdout.flush()
     elif status == 'finished':
         print('{}: done downloading, now converting ...'.format(filename))
@@ -51,6 +52,11 @@ ydl_opts = {
     'ignoreerrors': True,
     'nooverwrites': True,
     'continuedl': True,
+    'noplaylist': True,
+    'writesubtitles': True,
+    #'writeautomaticsub':True,
+    'subtitlesformat': 'best',
+    'subtitleslangs': ['en'],
 }
 
 
@@ -66,6 +72,10 @@ def load_meta(path=meta_path):
                 playlist.append(line.strip())
         meta[category] = playlist
     return meta
+
+
+def test_subtitle(filename):
+    pass
 
 
 def main():
